@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "prod": "deno --env -A main.ts"
+  },
+  "imports": {
+    "@solana-program/system": "npm:@solana-program/system@^0.12.0",
+    "@solana/kit": "npm:@solana/kit@^6.5.0",
+    "discordeno": "npm:discordeno@^21.0.0",
+    "effect": "npm:effect@^3.21.0"
+  }
+}

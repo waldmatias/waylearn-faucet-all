@@ -1,0 +1,78 @@
+{
+  "version": "0.1.0",
+  "name": "waylearn_faucet",
+  "instructions": [
+    {
+      "name": "initialize",
+      "accounts": [
+        { "name": "config", "isMut": true, "isSigner": false },
+        { "name": "vault", "isMut": true, "isSigner": false },
+        { "name": "admin", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "maxTopupAmount", "type": "u64" },
+        { "name": "initialFunding", "type": "u64" }
+      ]
+    },
+    {
+      "name": "updateConfig",
+      "accounts": [
+        { "name": "config", "isMut": true, "isSigner": false },
+        { "name": "admin", "isMut": false, "isSigner": true }
+      ],
+      "args": [{ "name": "newMaxTopupAmount", "type": "u64" }]
+    },
+    {
+      "name": "solDrop",
+      "accounts": [
+        { "name": "config", "isMut": false, "isSigner": false },
+        { "name": "vault", "isMut": true, "isSigner": false },
+        { "name": "recipient", "isMut": true, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "FaucetConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "admin", "type": "publicKey" },
+          { "name": "maxTopupAmount", "type": "u64" },
+          { "name": "bump", "type": "u8" }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Unauthorized, are you sure you are the admin?"
+    },
+    {
+      "code": 6001,
+      "name": "VaultInsufficientBalance",
+      "msg": "Top up amount higher than vault balance"
+    },
+    { "code": 6002, "name": "VaultEmpty", "msg": "No SOL left in vault" },
+    {
+      "code": 6003,
+      "name": "InvalidDepositAmount",
+      "msg": "Invalid deposit amount"
+    },
+    {
+      "code": 6004,
+      "name": "RecipientNotWhitelisted",
+      "msg": "Recipient is not whitelisted"
+    },
+    {
+      "code": 6005,
+      "name": "RecipientHasEnoughBalance",
+      "msg": "Recipient already holds a sufficient SOL amount"
+    }
+  ]
+}
